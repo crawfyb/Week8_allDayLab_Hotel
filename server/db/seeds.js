@@ -1,24 +1,20 @@
-const express = require('express');
-const app = express();
+use hotel;
+db.dropDatabase();
 
-const cors = require('cors');
-app.use(cors());
-
-const bodyParser = require('body-parser');
-const MongoClient = require('mongodb').MongoClient;
-const createRouter = require('./helpers/create_router.js');
-
-app.use(bodyParser.json());
-
-MongoClient.connect('mongodb://localhost:27017')
-.then((client) => {
-  const db = client.db('hotel');
-  const guestsCollection = db.collection('guests');
-  const guestsRouter = createRouter(guestsCollection);
-  app.use('/api/guests', guestsRouter);
-})
-.catch(console.err);
-
-app.listen(3000, function () {
-  console.log(`listening on port ${this.address().port}`);
-});
+db.guests.insertMany([
+  {
+    name: "Albert Henckels",
+    email: "EdNorton@hotmail.com",
+    checked_in: true
+  },
+  {
+    name: "Jopling",
+    email: "Will_dee_foe_shure@gmail.com",
+    checked_in: false
+  },
+  {
+    name: "Dimitri",
+    email: "Brody_A@outlook.com",
+    checked_in: false
+  }
+])
